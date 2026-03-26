@@ -15,17 +15,35 @@ def factorial(n):
 
 def procesar_entrada(entrada):
     if "-" in entrada:
-        desde, hasta = map(int, entrada.split("-"))
+        partes = entrada.split("-")
+
+        # Caso: -hasta (ej: -10)
+        if partes[0] == "":
+            desde = 1
+            hasta = int(partes[1])
+
+        # Caso: desde- (ej: 5-)
+        elif partes[1] == "":
+            desde = int(partes[0])
+            hasta = 60
+
+        # Caso: desde-hasta (ej: 4-8)
+        else:
+            desde = int(partes[0])
+            hasta = int(partes[1])
+
         for i in range(desde, hasta + 1):
             print(f"{i}! = {factorial(i)}")
+
     else:
         num = int(entrada)
         print(factorial(num))
 
-# Entrada por argumento o por input
+
+# Entrada por argumento o input
 if len(sys.argv) > 1:
     entrada = sys.argv[1]
 else:
-    entrada = input("Ingrese un número o rango (ej: 4-8): ")
+    entrada = input("Ingrese número o rango (ej: 4-8, -10, 5-): ")
 
 procesar_entrada(entrada)
